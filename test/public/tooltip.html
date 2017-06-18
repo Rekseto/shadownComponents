@@ -1,0 +1,61 @@
+<template id="s-template-of-tooltip">
+    <style>
+        .word {
+            font-weight: bold;
+        }
+
+        .tooltip {
+            width: auto;
+            position: absolute;
+            top: 35px;
+            left: 0;
+            font-weight: 500;
+            padding: 0.7rem;
+            background-color: #111117;
+            color: #FFFFFF;
+            opacity: 0.9;
+            border-radius: 10%;
+        }
+        .tooltip-isCompleted {
+            transition: 0.2s;
+            transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
+            top: 45px;
+        }
+    </style>
+    <span class="word">{content}</span>
+</template>
+<script>
+    customElements.define('s-tooltip',class extends HTMLElement {
+        constructor() {
+            super();
+
+            let template = document.importNode(document.currentScript.ownerDocument.querySelector('#s-template-of-tooltip').content, true);
+            var content = template.querySelector('.word').textContent;
+
+            let wordElement = template.querySelector('.word');
+
+            wordElement.textContent = content.replace('{content}', this.textContent);
+
+            wordElement.setAttribute('aria-labelledby',this.dataset.desc);
+
+            wordElement.addEventListener('mouseover',function (e) {
+               var tooltip = document.createElement('span');
+               tooltip.classList.add('tooltip');
+               tooltip.setAttribute('aria-hidden',true);
+               tooltip.textContent = wordElement.getAttribute('aria-labelledby');
+                shadow.appendChild(tooltip);
+                setTimeout(function () {
+                    tooltip.classList.add('tooltip-isCompleted')
+                },10);
+            });
+
+
+
+            let shadow = this.attachShadow({mode: 'open'});
+            shadow.appendChild(template);
+            wordElement.addEventListener('mouseout',function () {
+               shadow.removeChild(shadow.querySelector('.tooltip'));
+            });
+        }
+    });
+</script>

@@ -1,0 +1,35 @@
+{
+  "name": "shadowncomponents",
+  "version": "0.0.1",
+  "description": "Small collection of components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rekseto/shadownComponents.git"
+  },
+  "keywords": [
+    "WebComponents",
+    "JavaScript"
+  ],
+  "author": "Rekseto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rekseto/shadownComponents/issues"
+  },
+  "homepage": "https://github.com/Rekseto/shadownComponents#readme",
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
