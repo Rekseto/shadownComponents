@@ -3,7 +3,7 @@
         .word {
             font-weight: bold;
         }
-
+/* Wojciech Glugla tooltip styles */
         .tooltip {
             width: auto;
             position: absolute;
@@ -26,36 +26,45 @@
 </template>
 <script>
     customElements.define('s-tooltip',class extends HTMLElement {
+
         constructor() {
             super();
 
+            // usign template
             let template = document.importNode(document.currentScript.ownerDocument.querySelector('#s-template-of-tooltip').content, true);
+            //  simplest dataBinding
             var content = template.querySelector('.word').textContent;
+            this.wordElement = template.querySelector('.word');
+            this.wordElement.textContent = content.replace('{content}', this.textContent);
+            this.wordElement.setAttribute('aria-labelledby',this.dataset.desc);
+            // creating shadow root
+            this.shadow = this.attachShadow({mode: 'open'});
 
-            let wordElement = template.querySelector('.word');
+            // appending template to shadow root
+            this.shadow.appendChild(template);
 
-            wordElement.textContent = content.replace('{content}', this.textContent);
+            // tooltip behavior for example binding events etc..
+            this.tooltipBehavior();
+        }
 
-            wordElement.setAttribute('aria-labelledby',this.dataset.desc);
+        tooltipBehavior() {
+            let that = this;
 
-            wordElement.addEventListener('mouseover',function (e) {
-               var tooltip = document.createElement('span');
-               tooltip.classList.add('tooltip');
-               tooltip.setAttribute('aria-hidden',true);
-               tooltip.textContent = wordElement.getAttribute('aria-labelledby');
-                shadow.appendChild(tooltip);
+            this.wordElement.addEventListener('mouseover',function () {
+                var tooltip = document.createElement('span');
+                tooltip.classList.add('tooltip');
+                tooltip.setAttribute('aria-hidden',true);
+                tooltip.textContent = that.wordElement.getAttribute('aria-labelledby');
+                that.shadow.appendChild(tooltip);
                 setTimeout(function () {
                     tooltip.classList.add('tooltip-isCompleted')
                 },10);
             });
 
-
-
-            let shadow = this.attachShadow({mode: 'open'});
-            shadow.appendChild(template);
-            wordElement.addEventListener('mouseout',function () {
-               shadow.removeChild(shadow.querySelector('.tooltip'));
+            this.wordElement.addEventListener('mouseout',function () {
+                that.shadow.removeChild(that.shadow.querySelector('.tooltip'));
             });
         }
+
     });
 </script>
