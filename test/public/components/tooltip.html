@@ -5,21 +5,20 @@
         }
 /* Wojciech Glugla tooltip styles */
         .tooltip {
+            transition: 0.2s;
+            transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
             width: auto;
-            position: absolute;
-            top: 35px;
-            left: 0;
             font-weight: 500;
-            padding: 0.7rem;
+            padding: .2rem;
             background-color: #111117;
             color: #FFFFFF;
             opacity: 0.9;
-            border-radius: 10%;
+            border-radius: 15px;
         }
         .tooltip-isCompleted {
-            transition: 0.2s;
+            transition: 0.08s;
             transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
-            top: 45px;
+            padding: 0.4rem;
         }
     </style>
     <span class="word">{content}</span>
@@ -58,7 +57,7 @@
                 that.shadow.appendChild(tooltip);
                 setTimeout(function () {
                     tooltip.classList.add('tooltip-isCompleted')
-                },10);
+                },1);
             });
 
             this.wordElement.addEventListener('mouseout',function () {
