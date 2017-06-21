@@ -6,19 +6,35 @@
 
 </head>
 <style>
-    .navigation {
-        color: black;
+    * {
+        margin:0;
+        padding:0;
     }
 
+
+    .navigation {
+        background-color: pink;
+        width: 0px;
+        height: 120px;
+        overflow: hidden;
+        transition: 1s;
+        visibility: hidden;
+    }
     .navigation-isExpanded {
-        transition: 0.6s;
-        color: aqua;
+        visibility: visible;
+        width: 120px;
+    }
+
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 </style>
 <body>
-
-    <s-nav-toggler data-selector=".navigation">Toggle navigation</s-nav-toggler>
-
+<header class="header">
+    <s-nav-toggler  data-selector=".navigation">Toggle navigation</s-nav-toggler>
     <nav class="navigation">
         <ul>
             <li>Start</li>
@@ -26,8 +42,10 @@
             <li>Third</li>
         </ul>
     </nav>
+</header>
 
-    <s-tooltip data-desc="explaining">lorem!</s-tooltip>
+
+<s-tooltip data-desc="explaining">lorem!</s-tooltip>
 
 <link rel="import" href="components/tooltip.html">
 <link rel="import" href="components/nav-toggler.html">

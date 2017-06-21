@@ -1,47 +1,26 @@
 <template id="s-template-of-navtoggler">
-    <style>
-
-    </style>
-    <button aria-expanded="false" aria-labelledby="Toggle menu">{content}</button>
+    <button aria-expanded="false" aria-labelledby="Toggle menu"></button>
 </template>
 <script>
     class SNavToggler extends HTMLElement {
-
-        get getState() {
-            return this.state;
-        }
-
-        toggle () {
-            if(this.state == true) {
-                this.state = false;
-                this.buttonElement.setAttribute('aria-expanded','false');
-                this.navElement.classList.remove(this.selector.replace('.','') + '-isExpanded')
-            } else {
-                this.state = true;
-                this.buttonElement.setAttribute('aria-expanded','true');
-                this.navElement.classList.add(this.selector.replace('.','') + '-isExpanded')
-            }
-        }
-
-        buttonBehavior() {
-            var that = this;
-            this.buttonElement.addEventListener('click',function (e) {
-                that.toggle();
-                console.log('ej')
-            });
-        }
 
         constructor() {
             super();
 
             let template = document.importNode(document.currentScript.ownerDocument.querySelector('#s-template-of-navtoggler').content, true);
 
+            this.computedStyles = window.getComputedStyle(this,null);
+
+
             var content = template.querySelector('button').textContent;
             this.buttonElement = template.querySelector('button');
-            this.buttonElement.textContent = content.replace('{content}', this.textContent);
+            this.buttonElement.insertAdjacentHTML('afterbegin', this.innerHTML);
             // creating shadow root
+            this.buttonElement.style = this.computedStyles;
             this.shadow = this.attachShadow({mode: 'open'});
             this.selector = this.dataset.selector;
+
+            getStyleSheet('')
             this.navElement = document.querySelector(this.selector);
             // appending template to shadow root
             this.shadow.appendChild(template);
@@ -49,10 +28,34 @@
             this.buttonBehavior();
 
 
-
         }
+
+        get getState() {
+            return this.state;
+        }
+
+        toggle() {
+            if (this.state == true) {
+                this.state = false;
+                this.buttonElement.setAttribute('aria-expanded', 'false');
+                this.navElement.classList.remove('navigation-isExpanded');
+
+            } else {
+                this.state = true;
+                this.buttonElement.setAttribute('aria-expanded', 'true');
+                this.navElement.classList.add('navigation-isExpanded');
+            }
+        }
+
+        buttonBehavior() {
+            var that = this;
+            this.addEventListener('click', function (e) {
+                that.toggle();
+            });
+        }
+
 
     }
 
-    customElements.define('s-nav-toggler',SNavToggler);
+    customElements.define('s-nav-toggler', SNavToggler);
 </script>
