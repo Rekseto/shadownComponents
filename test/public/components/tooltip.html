@@ -1,27 +1,7 @@
 <template id="s-template-of-tooltip">
-    <style>
-        .word {
-            font-weight: bold;
-        }
-/* Wojciech Glugla tooltip styles */
-        .tooltip {
-            transition: 0.2s;
-            transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
-            width: auto;
-            font-weight: 500;
-            padding: .2rem;
-            background-color: #111117;
-            color: #FFFFFF;
-            opacity: 0.9;
-            border-radius: 15px;
-        }
-        .tooltip-isCompleted {
-            transition: 0.08s;
-            transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
-            padding: 0.4rem;
-        }
-    </style>
-    <span class="word">{content}</span>
+    <link rel='stylesheet' href='/components/styles/tooltip.css'/>
+
+    <span class="word"></span>
 </template>
 <script>
     customElements.define('s-tooltip',class extends HTMLElement {
@@ -29,39 +9,35 @@
         constructor() {
             super();
 
-            // usign template
             let template = document.importNode(document.currentScript.ownerDocument.querySelector('#s-template-of-tooltip').content, true);
-            //  simplest dataBinding
-            var content = template.querySelector('.word').textContent;
+
             this.wordElement = template.querySelector('.word');
-            this.wordElement.textContent = content.replace('{content}', this.textContent);
-            this.wordElement.setAttribute('aria-labelledby',this.dataset.desc);
-            // creating shadow root
+            this.wordElement.textContent = this.textContent;
+            this.wordElement.setAttribute('aria-label',this.dataset.desc);
+
             this.shadow = this.attachShadow({mode: 'open'});
 
-            // appending template to shadow root
             this.shadow.appendChild(template);
 
-            // tooltip behavior for example binding events etc..
+
             this.tooltipBehavior();
         }
 
         tooltipBehavior() {
-            let that = this;
 
-            this.wordElement.addEventListener('mouseover',function () {
+            this.wordElement.addEventListener('mouseover',( ) => {
                 var tooltip = document.createElement('span');
                 tooltip.classList.add('tooltip');
                 tooltip.setAttribute('aria-hidden',true);
-                tooltip.textContent = that.wordElement.getAttribute('aria-labelledby');
-                that.shadow.appendChild(tooltip);
+                tooltip.textContent = this.wordElement.getAttribute('aria-label');
+                this.shadow.appendChild(tooltip);
                 setTimeout(function () {
                     tooltip.classList.add('tooltip-isCompleted')
                 },1);
             });
 
-            this.wordElement.addEventListener('mouseout',function () {
-                that.shadow.removeChild(that.shadow.querySelector('.tooltip'));
+            this.wordElement.addEventListener('mouseout', () => {
+                this.shadow.removeChild(this.shadow.querySelector('.tooltip'));
             });
         }
 

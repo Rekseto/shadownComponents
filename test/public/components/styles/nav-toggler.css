@@ -1,12 +1,9 @@
 button {
     background: none;
     border: none;
-    outline: dashed;
     cursor: pointer;
-    line-height: 1.5;
-    font: 700 1.2rem 'Roboto Slab', sans-serif;
-    letter-spacing: 0.05rem;
     display: flex;
+    font: inherit;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -16,4 +13,5 @@ button {
 img {
     width: 15%;
     height: 15%;
+    padding: 15px;
 }
