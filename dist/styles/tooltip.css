@@ -1,0 +1,24 @@
+.word {
+    font-weight: bold;
+}
+
+/* https://github.com/Googiell Styles */
+
+.tooltip {
+    transition: 0.2s;
+    transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
+    width: auto;
+    font-weight: 500;
+    padding: .2rem;
+    background-color: #111117;
+    color: #FFFFFF;
+    opacity: 0.9;
+    border-radius: 15px;
+}
+
+
+.tooltip-isCompleted {
+    transition: 0.08s;
+    transition-timing-function:cubic-bezier(.43,.17,.64,1.09);
+    padding: 0.4rem;
+}

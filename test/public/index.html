@@ -38,7 +38,13 @@
 </style>
 <body>
 <header class="header">
-    <s-nav-toggler  data-selector="navigation">Toggle navigation</s-nav-toggler>
+<!--
+     data-selector - leads us to naviagtion element (by class)
+
+     data-label - provides to set hide text label for screen users : true = visible, false = hidden
+    !data-label does NOT provide to skip content
+    -->
+    <s-nav-toggler  data-selector="navigation" data-label="true">Toggle navigation</s-nav-toggler>
     <nav class="navigation">
         <ul>
             <li>Start</li>

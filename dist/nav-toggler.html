@@ -1,5 +1,12 @@
 <template id="s-template-of-navtoggler">
-    <button aria-expanded="false" aria-labelledby="Toggle menu"></button>
+
+    <link rel='stylesheet' href='/components/styles/nav-toggler.css'/>
+
+    <button aria-expanded="false" class="btn">
+        <img class="btn--image" src="menu.svg" alt="" aria-hidden="true">
+        <span class="btn--label"></span>
+    </button>
+
 </template>
 <script>
     class SNavToggler extends HTMLElement {
@@ -9,48 +16,38 @@
 
             let template = document.importNode(document.currentScript.ownerDocument.querySelector('#s-template-of-navtoggler').content, true);
 
-            this.computedStyles = window.getComputedStyle(this,null);
+            this.buttonElement = template.querySelector('.btn');
 
-
-            var content = template.querySelector('button').textContent;
-            this.buttonElement = template.querySelector('button');
-            this.buttonElement.insertAdjacentHTML('afterbegin', this.innerHTML);
+            this.labelElement = template.querySelector('.btn--label');
+            this.labelElement.insertAdjacentHTML('afterbegin', this.innerHTML);
             // creating shadow root
-            this.buttonElement.style = this.computedStyles;
             this.shadow = this.attachShadow({mode: 'open'});
             this.selector = this.dataset.selector;
+            if(this.dataset.label == 'false') this.labelElement.classList.add('btn--label-invisible');
+            this.navElement = document.getElementsByClassName(this.selector)[0];
 
-            getStyleSheet('')
-            this.navElement = document.querySelector(this.selector);
             // appending template to shadow root
             this.shadow.appendChild(template);
 
             this.buttonBehavior();
-
-
-        }
-
-        get getState() {
-            return this.state;
         }
 
         toggle() {
             if (this.state == true) {
                 this.state = false;
                 this.buttonElement.setAttribute('aria-expanded', 'false');
-                this.navElement.classList.remove('navigation-isExpanded');
+                this.navElement.classList.remove(this.selector + '-isExpanded');
 
             } else {
                 this.state = true;
                 this.buttonElement.setAttribute('aria-expanded', 'true');
-                this.navElement.classList.add('navigation-isExpanded');
+                this.navElement.classList.add(this.selector + '-isExpanded');
             }
         }
 
         buttonBehavior() {
-            var that = this;
-            this.addEventListener('click', function (e) {
-                that.toggle();
+            this.addEventListener('click',() => {
+                this.toggle();
             });
         }
 
