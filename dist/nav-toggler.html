@@ -23,7 +23,7 @@
             // creating shadow root
             this.shadow = this.attachShadow({mode: 'open'});
             this.selector = this.dataset.selector;
-            if(this.dataset.label == 'false') this.labelElement.classList.add('btn--label-invisible');
+            if(this.dataset.label === 'false') this.labelElement.classList.add('btn--label-invisible');
             this.navElement = document.getElementsByClassName(this.selector)[0];
 
             // appending template to shadow root
@@ -32,14 +32,18 @@
             this.buttonBehavior();
         }
 
+        setState(val) {
+            this.state = val;
+        }
+
         toggle() {
-            if (this.state == true) {
-                this.state = false;
+            if (this.state === true) {
+                this.setState(false)
                 this.buttonElement.setAttribute('aria-expanded', 'false');
                 this.navElement.classList.remove(this.selector + '-isExpanded');
 
             } else {
-                this.state = true;
+                this.setState(false);
                 this.buttonElement.setAttribute('aria-expanded', 'true');
                 this.navElement.classList.add(this.selector + '-isExpanded');
             }
